@@ -20,3 +20,8 @@ body {
 .app-list-item:hover, .addon-list-item:hover {
   background-color: #FFC;
 }
+
+.options-warning {
+  width: 300px;
+  padding: 0 10px;
+}

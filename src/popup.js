@@ -5,11 +5,11 @@ function getHerokuClient() {
 }
 
 async function getApps() {
-  return heroku.get('/apps')
+  return getHerokuClient().get('/apps')
 }
 
 async function getAddons(appId) {
-  return heroku.get(`/apps/${appId}/addons`)
+  return getHerokuClient().get(`/apps/${appId}/addons`)
 }
 
 function getAppListElement() {
@@ -40,7 +40,7 @@ async function showAddonsList(app) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+async function showAppList() {
   const apps = await getApps()
 
   const listElement = document.querySelector('.app-list')
@@ -53,4 +53,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     item.addEventListener('click', () => showAddonsList(app))
     listElement.appendChild(item)
   }
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const authToken = localStorage.authToken
+  if (authToken === undefined || authToken === '') {
+    getAppListElement().style.display = 'none'
+    document.querySelector('.options-warning').style.display = 'block'
+    return
+  }
+
+  showAppList()
 });
