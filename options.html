@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Heroku Add-ons</title>
+    <link rel="stylesheet" href="src/css/options.css" type="text/css" />
+    <script src="dist/options.js"></script>
+  </head>
+  <body>
+    <form class="options-form">
+      <div class="option-field">
+        <label class="option-field-label">Auth Token</label>
+        <p class="option-field-hint">
+          Open your terminal and run <code>heroku auth:token</code>.
+        </p>
+        <input class="option-field-input" type="text" name="authToken" value="" />
+      </div>
+      <div class="option-field">
+        <input type="submit" value="Save" />
+      </div>
+    </form>
+  </body>
+</html>

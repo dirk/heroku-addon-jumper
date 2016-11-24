@@ -1,0 +1,22 @@
+body {
+  margin: 1px;
+  font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
+}
+
+.app-list, .addon-list {
+  width: 250px;
+}
+.app-list-item, .addon-list-item {
+  display: block;
+  color: #333;
+  cursor: pointer;
+  font: normal 13px arial, sans-serif;
+  padding: 6px;
+  border-bottom: 1px dotted #aaa;
+}
+.app-list-item:last-child, .addon-list-item:last-child {
+  border-bottom-style: none;
+}
+.app-list-item:hover, .addon-list-item:hover {
+  background-color: #FFC;
+}

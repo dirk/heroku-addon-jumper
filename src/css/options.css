@@ -1,0 +1,25 @@
+body {
+  margin: 20px;
+  font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  font-size: 12px;
+}
+
+.options-form {
+  width: 500px;
+}
+.option-field {
+  margin: 20px 0;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+.option-field:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.option-field-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.option-field-input[type=text] {
+  width: 75%;
+}
