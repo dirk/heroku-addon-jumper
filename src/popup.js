@@ -42,6 +42,9 @@ async function showAddonsList(app) {
 
 async function showAppList() {
   const apps = await getApps()
+  apps.sort(function (a, b) {
+    return a.name.localeCompare(b.name)
+  })
 
   const listElement = document.querySelector('.app-list')
   listElement.innerHTML = ''
