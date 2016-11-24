@@ -22,6 +22,9 @@ function getAddonListElement() {
 
 async function showAddonsList(app) {
   const addons = await getAddons(app.id)
+  addons.sort(function (a, b) {
+    return a.plan.name.localeCompare(b.plan.name)
+  })
 
   const appListElement = getAppListElement()
   appListElement.style.display = 'none'
