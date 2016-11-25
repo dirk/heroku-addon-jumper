@@ -8,11 +8,18 @@ for file in dist/*.js; do
   file_minified=${file/.js/.min.js}
 
   node_modules/.bin/uglifyjs $file --output $file_minified --compress dead_code,unused --mangle
+done
 
-  # closure="java -jar node_modules/google-closure-compiler/compiler.jar"
-  #
-  # $closure --js $file            --js_output_file $file_minified.1 --compilation_level WHITESPACE_ONLY
-  # $closure --js $file_minified.1 --js_output_file $file_minified.2 --compilation_level ADVANCED_OPTIMIZATIONS
-  #
-  # mv $file_minified.2 $file_minified
+DEST=build
+rm -rf $DEST
+mkdir -p $DEST
+
+cp -R src        $DEST/
+cp -R dist       $DEST/
+cp *.html        $DEST/
+cp manifest.json $DEST/
+cp LICENSE       $DEST/
+
+for file in $DEST/dist/*.min.js; do
+  mv $file ${file/.min.js/.js}
 done
