@@ -2,6 +2,8 @@
 
 Quickly open [Heroku][] add-ons via their single-sign-on URLs.
 
+![Demo](demo.gif)
+
 **Note**: This is an _unofficial_ piece of software and is not in any way officially associated with Heroku. Use of this software is at your own risk, and you're encouraged to read the source yourself before use.
 
 [Heroku]: https://www.heroku.com/
