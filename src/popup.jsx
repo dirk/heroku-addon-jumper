@@ -8,44 +8,11 @@ function getHerokuClient() {
 }
 
 async function getApps() {
-  // return getHerokuClient().get('/apps')
-  return new Promise((resolve, reject) => {
-    let id = 0
-
-    const apps = [
-      'alpha',
-      'bravo',
-      'charlie',
-      'delta'
-    ].map(name => {
-      id += 1
-      return { id, name }
-    })
-
-    setTimeout(() => resolve(apps), 500)
-  })
+  return getHerokuClient().get('/apps')
 }
 
 async function getAddons(appId) {
-  // return getHerokuClient().get(`/apps/${appId}/addons`)
-  return new Promise((resolve, reject) => {
-    let id = 0
-
-    const addons = [
-      'deployhooks:email',
-      'deployhooks:http',
-      'scheduler:standard',
-    ].map(name => {
-      id += 1
-      return {
-        id: id,
-        plan: { name },
-        web_url: '#'
-      }
-    })
-
-    setTimeout(() => resolve(addons), 500)
-  })
+  return getHerokuClient().get(`/apps/${appId}/addons`)
 }
 
 class App extends React.Component {
