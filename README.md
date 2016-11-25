@@ -24,3 +24,7 @@ make
 Then add this extension to Chrome; see [their guide][] for more details.
 
 [their guide]: https://developer.chrome.com/extensions/getstarted
+
+## License
+
+Released under the MIT license, see [LICENSE](LICENSE) for details.
