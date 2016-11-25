@@ -15,55 +15,6 @@ async function getAddons(appId) {
   return getHerokuClient().get(`/apps/${appId}/addons`)
 }
 
-function getAppListElement() {
-  return document.querySelector('.app-list')
-}
-
-function getAddonListElement() {
-  return document.querySelector('.addon-list')
-}
-
-async function showAddonsList(app) {
-  const addons = await getAddons(app.id)
-  addons.sort(function (a, b) {
-    return a.plan.name.localeCompare(b.plan.name)
-  })
-
-  const appListElement = getAppListElement()
-  appListElement.style.display = 'none'
-
-  const listElement = getAddonListElement()
-  listElement.innerHTML = ''
-  listElement.style.display = 'block'
-
-  for (let addon of addons) {
-    const item = document.createElement('a')
-    item.className = 'addon-list-item'
-    item.target = '_blank'
-    item.href = addon.web_url
-    item.innerText = addon.plan.name
-    listElement.appendChild(item)
-  }
-}
-
-async function showAppList() {
-  const apps = await getApps()
-  apps.sort(function (a, b) {
-    return a.name.localeCompare(b.name)
-  })
-
-  const listElement = document.querySelector('.app-list')
-  listElement.innerHTML = ''
-
-  for (let app of apps) {
-    const item = document.createElement('a')
-    item.className = 'app-list-item'
-    item.innerText = app.name
-    item.addEventListener('click', () => showAddonsList(app))
-    listElement.appendChild(item)
-  }
-}
-
 class App extends React.Component {
   constructor() {
     super()
@@ -78,7 +29,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.showAppsList()
   }
 
@@ -119,7 +70,58 @@ class App extends React.Component {
     )
   }
 
-  render() {
+  renderHeader() {
+    if (this.state.isLoading) {
+      return null
+    }
+
+    let body
+    if (this.state.pane === 'apps') {
+      body = (
+        <span>
+          Apps
+        </span>
+      )
+    } else if (this.state.pane === 'addons') {
+      const goBackToApps = () => {
+        this.setState({
+          pane: 'apps',
+          app: null,
+          addons: [],
+        })
+      }
+
+      body = (
+        <a
+          className="header-button"
+          href="#"
+          onClick={goBackToApps}
+        >
+          Back to apps
+        </a>
+      )
+    }
+
+    const optionsURL = chrome.extension.getURL('options.html')
+    const optionsButton = (
+      <a
+        className="header-button header-button-options"
+        href={optionsURL}
+        target="_blank"
+      >
+        Settings
+      </a>
+    )
+
+    return (
+      <div className="header">
+        {body}
+        {optionsButton}
+      </div>
+    )
+  }
+
+  renderPane() {
     if (this.state.isLoading) {
       return (
         <p className="loading">Loading...</p>
@@ -140,17 +142,27 @@ class App extends React.Component {
       )
     }
   }
+
+  render() {
+    const appClassName = `app app-${this.state.pane}`
+    return (
+      <div className={appClassName}>
+        {this.renderHeader()}
+        {this.renderPane()}
+      </div>
+    )
+  }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
+  const appContainer = document.querySelector('.app-container')
+
   const authToken = localStorage.authToken
   if (authToken === undefined || authToken === '') {
-    getAppListElement().style.display = 'none'
+    appContainer.style.display = 'none'
     document.querySelector('.options-warning').style.display = 'block'
     return
   }
 
-  // showAppList()
-  const appNode = document.querySelector('.app')
-  ReactDOM.render(<App />, appNode)
+  ReactDOM.render(<App />, appContainer)
 })
